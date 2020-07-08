@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 # Функция получения html.
 def get_html(url):
     request = requests.get(url)
-    if request.ok:              # Сервер вернул код 200.
+    if request.ok:                  # Сервер вернул код 200.
         return request.text
     else:
         print(request.status_code)  # Выводим код ошибки.
@@ -35,10 +35,10 @@ def get_page_data(html):
     soup = BeautifulSoup(html, 'lxml')  # Вторым атрибутом указываем нужный парсер.
     items = soup.find_all('div', class_="model")
     for item in items:
-        try:                            # Если значения нет, то записываем пустую строку.
+        try:
             name = item.find_all('a')[0].text.strip()
         except:
-            name = ''
+            name = ''                   # Если значения нет, то записываем пустую строку.
 
         try:
             link = 'https://www.yandex.ru' + item.find_all('a')[0].get('href')
@@ -58,17 +58,19 @@ def main():
     url = "https://www.yandex.ru"
     get_page_data(get_html(url))
 
-    # for page_number in range(0, 5):  # Пагинатор по количеству страниц.
+
+    # for page_number in range(0, 5):   # Пагинатор по количеству страниц.
     #     get_page_data(get_html(url + str(page_number)))
 
-    # while True:                      # Пагинатор по кнопке Next.
-    #     get_page_data(get_html(url))
+
+    # while True:                       # Пагинатор по кнопке Next.
+    #     get_page_data(get_html(url))  # Парсим сначала главную страницу.
     #
     #     soup = BeautifulSoup(get_html(url), 'lxml')
-    #     try:
-    #         pattern = 'Next'  # Паттерн для регулярного выражения.   # VV Ищем url кнопки Next с паттерном.
+    #     try:                          # Переопределяем url и парсим остальные страницы.
+    #         pattern = 'Next'          # Паттерн для регулярного выражения.
     #         next_button_url = "https://www.yandex.ru" + soup.find('a', text=re.compile(pattern)).get('href')
-    #     except:
+    #     except:                                                      # Ищем url кнопки Next с паттерном.
     #         break
 
 
