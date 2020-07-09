@@ -23,8 +23,15 @@ def get_html(url):
 #                          data['link'],
 #                          ])
 
+# # Функция №2 записи в csv.
+# def write_csv2(data):
+#     with open('file.csv', 'a') as file:
+#         order = ['name', 'link']
+#         writer = csv.DictWriter(file, fieldnames=order)
+#
+#         writer.writerow(data)
 
-# # Форматируем полученную строку.
+# # Функция форматирования полученной строки.
 # def refined(string):
 #     result = string.split(' ')[1]
 #     return result
@@ -58,12 +65,12 @@ def main():
     url = "https://www.yandex.ru"
     get_page_data(get_html(url))
 
-
-    # for page_number in range(0, 5):   # Пагинатор по количеству страниц.
+    # # Пагинатор по количеству страниц.
+    # for page_number in range(0, 5):
     #     get_page_data(get_html(url + str(page_number)))
 
-
-    # while True:                       # Пагинатор по кнопке Next.
+    # # Пагинатор по кнопке Next.
+    # while True:
     #     get_page_data(get_html(url))  # Парсим сначала главную страницу.
     #
     #     soup = BeautifulSoup(get_html(url), 'lxml')
