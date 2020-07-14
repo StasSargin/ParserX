@@ -1,9 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
-
-
-# import csv
-# import re
+import csv
+from peewee import *
+import re
 
 
 # Функция получения html.
@@ -32,6 +31,36 @@ def get_html(url):
 #         writer = csv.DictWriter(file, fieldnames=fieldnames)
 #
 #         writer.writerow(data)
+
+# # Функция записи в postgresql из csv.
+# db = PostgresqlDatabase(database='dbname', user='username', password='password', host='localhost')
+#                        # Параметры указываются при создании БД.
+#
+#
+# class Coin(Model):                                            # Дополнительный инфа в документации peewee.
+#     name = CharField()
+#     link = TextField()
+#
+#     class Meta:
+#         database = db
+#
+#
+# def write_db():
+#
+#     db.connect()
+#     db.create_tables([Coin])
+#
+#     with open('file.csv') as file:
+#         fieldnames = ['name', 'link']
+#         reader = csv.DictReader(file, fieldnames=fieldnames)  # Читаем csv.
+#
+#         coins = list(reader)                                  # Приводим csv к списку.
+#
+#         with db.atomic():
+#             for row in coins:
+#                 Coin.create(**row)
+#
+# # $ pg_dump -U username -h localhost dbname > dump.sql        - Создание дампа БД через терминал.
 
 # # Функция форматирования полученной строки.
 # def refined(string):
@@ -85,6 +114,7 @@ def get_page_data(html):
         }
 
         # write_csv(data)            # Записываем в csv-файл.
+        # write_db()                 # Записываем в db.
 
 
 # Основная функция.
