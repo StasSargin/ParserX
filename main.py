@@ -15,24 +15,13 @@ def get_html(url):
 
 
 # # Функция записи в csv.
-# def write_csv(data):
-#     with open('file.csv', 'a') as file:
-#         writer = csv.writer(file)
-#
-#         writer.writerow([
-#                          data['name'],
-#                          data['link'],
-#                          ])
-
-# # Функция №2 записи в csv.
 # def write_csv2(data):
 #     with open('file.csv', 'a') as file:
 #         fieldnames = ['name', 'link']
 #         writer = csv.DictWriter(file, fieldnames=fieldnames)
-#
 #         writer.writerow(data)
 
-# # Функция записи в postgresql из csv.
+# # Функция записи в postgresqldb из csv.
 # db = PostgresqlDatabase(database='dbname', user='username', password='password', host='localhost')
 #                        # Параметры указываются при создании БД.
 #
@@ -60,7 +49,7 @@ def get_html(url):
 #             for row in coins:
 #                 Coin.create(**row)
 #
-# # $ pg_dump -U username -h localhost dbname > dump.sql        - Создание дампа БД через терминал.
+# # $ pg_dump -U username -h localhost dbname > dump.sql        - Создаем дамп БД через терминал.
 
 # # Функция форматирования полученной строки.
 # def refined(string):
@@ -136,6 +125,26 @@ def main():
     #         next_button_url = "https://www.yandex.ru" + soup.find('a', text=re.compile(pattern)).get('href')
     #     except:                                                      # Ищем url кнопки Next с паттерном.
     #         break
+
+    # # Для парсинга AJAX.
+    #
+    # """
+    # Url берем из Network->XHR->Headers.
+    # Парсим Response.
+    # Смотрим на скрытые символы типа \n и \t.
+    # """
+    #
+    # data = get_html(url).strip().split('\n')  # Разбиваем ответ на список строк по \n.
+    #
+    # for row in data:
+    #     columns = row.strip().split('\t')     # Разбиваем строки на списки по \t.
+    #     name = columns[0]
+    #     link = columns[1]
+    #
+    #     data = {
+    #         'name': name,
+    #         'link': link
+    #     }
 
 
 if __name__ == '__main__':
