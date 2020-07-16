@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import csv
 from peewee import *
 import re
+from multiprocessing import Pool
 
 
 """Функция получения html."""
@@ -81,6 +82,11 @@ def get_page_data(html):
         # write_db()                              # Записываем в db.
 
 
+def make_all(url):
+    text = get_html(url)
+    get_page_data(text)
+
+
 """Основная функция."""
 def main():
     url = "https://www.yandex.ru"
@@ -121,10 +127,18 @@ def main():
     #         'link': link
     #     }
 
+    """Мультипроцесс"""
+    # url = 'https://www.yandex.ru/page={}'
+    # urls = [url.format(str(1)) for i in range(0, 101)]  # Получаем урлы. В диапазоне до общего числа страниц плюс одна.
+    #
+    # with Pool(20) as p:  # Указываем колчиство процессов.
+    #     p.map(make_all, urls)
+
 
 if __name__ == '__main__':
     main()
 
+"""Подсказки: BeautifulSoup, Регулярные выражения """
 """
 Поиск элементов в BeautifulSoup.
 .find() - Найти первый элемент с указанными атрибутами.
